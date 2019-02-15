@@ -1,18 +1,16 @@
 package rx
 
 import io.reactivex.Observable
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.schedulers.Schedulers
 
-fun main(args: Array<String>) {
 
-    Observable.combineLatest(
+fun main() {
+
+    Observables.combineLatest(
         Observable.just("o1"),
-        Observable.just("o2"),
-        BiFunction<String, String, String> { _, _ ->
-            Thread.currentThread().name
-        }
-    )
+        Observable.just("o2")
+    ) { _, _ -> Thread.currentThread().name }
         .subscribe {
             println("Without subscribeOn")
             println("in combineLatest: $it")
@@ -21,13 +19,10 @@ fun main(args: Array<String>) {
 
     println()
 
-    Observable.combineLatest(
+    Observables.combineLatest(
         Observable.just("o1"),
-        Observable.just("o2"),
-        BiFunction<String, String, String> { _, _ ->
-            Thread.currentThread().name
-        }
-    )
+        Observable.just("o2")
+    ) { _, _ -> Thread.currentThread().name }
         .subscribeOn(Schedulers.io())
         .subscribe {
             println("With subscribeOn")
@@ -36,5 +31,5 @@ fun main(args: Array<String>) {
 
         }
 
-    Thread.sleep(500)
+    Thread.sleep(100)
 }
