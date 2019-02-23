@@ -10,30 +10,6 @@ import io.reactivex.schedulers.Schedulers
  * 문제는 thread 였음. 좀 헤멨는데 그래도 원인을 잘 밝혀내서 다행!
  */
 fun main() {
-    code1()
-    code2()
-}
-
-fun code1() {
-    val ob1 = Observable.fromArray(1,2,3,4,5).map {
-        println("expensive operation")
-        it * 2
-    }.share()
-
-    fun doMultiplyBy2() {
-        val ob2 = ob1.share()
-
-        ob2.flatMap { Observable.just(" 1st subscriber: $it;") }.subscribe{println(it)}
-
-        ob2.flatMap { Observable.just(" 2nd subscriber: $it;") }.subscribe{println(it)}
-
-        ob2.share()
-    }
-
-    doMultiplyBy2()
-}
-
-fun code2() {
     val ob1 = Observable.fromArray(1,2,3,4,5).map {
         println("expensive operation")
         it * 2
@@ -47,5 +23,5 @@ fun code2() {
 
     doMultiplyBy2()
 
-    Thread.sleep(1000)
+    ob1.test().await()
 }
