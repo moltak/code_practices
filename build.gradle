@@ -13,6 +13,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
 
+    testImplementation "org.assertj:assertj-core:3.11.1"
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:2.+"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
